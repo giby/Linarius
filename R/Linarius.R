@@ -19,7 +19,8 @@ plolev<-sort(unique(ploidy))
 NULL->alco
 NULL->noms
 NULL->glob
-for(i in plolev) cbind(alco,(1-(apply(as.matrix(xx[ploidy==i,])==0,2,sum)/(apply(as.matrix(xx[ploidy==i,])==0,2,sum)+apply(as.matrix(xx[ploidy==i,])==1,2,sum)))^(1/i))*100)->alco
+#for(i in plolev) cbind(alco,(1-(apply(as.matrix(xx[ploidy==i,])==0,2,sum)/(apply(as.matrix(xx[ploidy==i,])==0,2,sum)+apply(as.matrix(xx[ploidy==i,])==1,2,sum)))^(1/i))*100)->alco
+for(i in plolev) cbind(alco, colMeans(xx[ploidy == i, ]^(1/i)*100) -> alco
 for(j in plolev) noms<-c(noms,paste(j,"x-frequence(%)", sep="",collapse=""))
 colnames(alco)<-noms
 for(k in plolev) glob<-c(glob,nrow(xx[ploidy==k,]))
@@ -53,3 +54,16 @@ for(j in 1:length(frec)) lingen(frec[j])-> fakedata[,j]
 	return(fakedata)
 }
 
+#############################################################################################################################################################################
+#Counting 
+zerodet<- function(X,factor,PV=5,ID=1) {
+	#clean NA
+X<-X[!is.na(factor),]
+factor<-factor[!is.na(factor)]
+    # Count
+rbind(colSums(X[factor==ID,]),colSums(X[factor!=ID,]),sum(factor==ID)-colSums(X[factor==ID,]),sum(factor!=ID)-colSums(X[factor!=ID,]))->Contingence
+rownames(Contingence)<-c("Pres.in","Pres.out","Abs.in","Abs.out")
+apply(Contingence,2, min)->limit
+Contingence[,limit<=PV]
+
+}
