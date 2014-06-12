@@ -2,6 +2,10 @@
 ###                                                                            Linarius.R                                                                                ####
 #############################################################################################################################################################################
 
+.onAttach <- function(Linarius, Linarius) { 
+  packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2 and accepting them") 
+}
+
 #Alleles frequency & heterozygocy 
 allele.count<- function(xx,ploidy=2) {
 plolev<-sort(unique(ploidy))
@@ -19,8 +23,8 @@ plolev<-sort(unique(ploidy))
 NULL->alco
 NULL->noms
 NULL->glob
-#for(i in plolev) cbind(alco,(1-(apply(as.matrix(xx[ploidy==i,])==0,2,sum)/(apply(as.matrix(xx[ploidy==i,])==0,2,sum)+apply(as.matrix(xx[ploidy==i,])==1,2,sum)))^(1/i))*100)->alco
-for(i in plolev) cbind(alco, colMeans(xx[ploidy == i, ]^(1/i)*100) -> alco
+for(i in plolev) cbind(alco,(1-(apply(as.matrix(xx[ploidy==i,])==0,2,sum)/(apply(as.matrix(xx[ploidy==i,])==0,2,sum)+apply(as.matrix(xx[ploidy==i,])==1,2,sum)))^(1/i))*100)->alco
+#for(i in plolev) cbind(alco, colMeans(xx[ploidy == i, ]^(1/i)*100) -> alco
 for(j in plolev) noms<-c(noms,paste(j,"x-frequence(%)", sep="",collapse=""))
 colnames(alco)<-noms
 for(k in plolev) glob<-c(glob,nrow(xx[ploidy==k,]))
@@ -67,3 +71,54 @@ apply(Contingence,2, min)->limit
 Contingence[,limit<=PV]
 
 }
+#############################################################################################################################################################################
+#Identity of population 
+BIC<-function(XX,factor,ploidy=2) { 
+	allele.frec(XX,ploidy=ploidy)->frec_all
+	frec_all<-(frec_all[,ncol(frec_all)])
+	levels<-sort(unique(factor))
+	0->BIC_VALUE
+	for(i in levels){
+		
+		allele.frec(XX[factor==i,],ploidy=ploidy[factor==i])->BT
+		BT<-BT[,ncol(BT)]
+BIC_VALUE<-BIC_VALUE+(BT-frec_all)^2
+	} 
+	BIC_VALUE<-sum(BIC_VALUE)
+return(BIC_VALUE)	
+	
+	}
+	#############################################################################################################################################################################
+#boot of BIC
+Boot.BIC<-function(XX,factor,ploidy,nboot=100) {
+	boot<-vector(mode = "numeric", length = nboot)
+	len<-(1:nboot)
+	allele.frec(XX,ploidy=ploidy)->frec_all
+	frec_all<-(frec_all[,ncol(frec_all)])
+	for(i in len) {
+		datagen(frec=frec_all/100,ploidy=ploidy)->fake
+		colnames(fake)<-names(XX)
+		BIC(fake,factor=factor,ploidy=ploidy)->boot[i]
+		#Bet <- as.genclone(df2genind(fake, ind.names = row.names(gelplo), type = "PA"))
+#sethierarchy(Bet) <- codeplo
+#setpop(Bet) <- ~Ploidy
+#res <- poppr.amova(Bet, hier = ~Ploidy)
+#res[1:4]$componentsofcovariance[1,2]->boot[i]	
+}
+return(boot)
+}
+
+	#############################################################################################################################################################################
+#Coloring terminal branch of trees 
+
+col.edge.phylo<-function (phy,groups,color=c(2,3,4,5),root.color=1)
+{
+	#col.edge<-rep(root.color,length(phy$tip))
+	col.edge<-rep(root.color,length(phy$edge[,1]))
+	cbind(phy$edge,col.edge)->Edge
+	cbind(Edge,(1:length(phy$edge[,1])))-> Edge
+	(Edge[order(Edge[,2], decreasing=F),])->Edge
+	groups->Edge[1:length(phy$tip),3]
+	(Edge[order(Edge[,4], decreasing=F),])->Edge
+	return(Edge[,3])
+	}
