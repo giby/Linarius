@@ -2,9 +2,9 @@
 ###                                                                            Linarius.R                                                                                ####
 #############################################################################################################################################################################
 
-.onAttach <- function(Linarius, Linarius) { 
-  packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2 and accepting them") 
-}
+#.onAttach <- function(Linarius, Linarius) { 
+#  packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2 and accepting them") 
+#}
 
 #Alleles frequency & heterozygocy 
 allele.count<- function(xx,ploidy=2) {
