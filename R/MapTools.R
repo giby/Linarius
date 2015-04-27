@@ -128,3 +128,21 @@ return(RGB)
 #"3096f4" "d39149" "51c8b2" "a80049" "ff001a" "ffe400" "a8ff49" "ffb632" "a0e785" "d94864" "ffda1a" "5cb6ad" "c18dba" "3491d6" "3fbbd1" 
 #      Tl       Vn       Vs 
 #"0112fd" "0072fe" "0091ff" 
+
+#############################################################################################################################################################################
+####                                                            		         Scale				                                                                     ####
+#############################################################################################################################################################################
+
+scalebar <- function(loc,length,unit="km" ,degrees = TRUE,cex=par("cex"), ...) { 
+	if(missing(loc)) stop("loc is missing") 
+	if(missing(length)) stop("length is missing") 
+	z <- c(0,length/c(4,2,4/3,1),length*1.1)+loc[1] 
+	if(degrees == TRUE) length<-180*(acos((cos(length/6371)-sin(loc[2]*pi/180)*sin(loc[2]*pi/180))/(cos(loc[2]*pi/180)*cos(loc[2]*pi/180))))/pi
+	x <- c(0,length/c(4,2,4/3,1),length*1.1)+loc[1] 
+	y <- c(0,length/(10*3:1))+loc[2] 
+	cols <- rep(c("black","white"),2) 
+	for (i in 1:4) rect(x[i],y[1],x[i+1],y[2],col=cols[i])
+	 for (i in 1:5) segments(x[i],y[2],x[i],y[3]) 
+	 labels <- z[c(1,3)]-loc[1]
+labels <- append(labels,paste(z[5]-loc[1],unit)) 
+text(x[c(1,3,5)],y[4],labels=labels,cex,pos=3,offset=0) }
