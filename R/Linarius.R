@@ -3,7 +3,7 @@
 #############################################################################################################################################################################
 
 #.onAttach <- function(Linarius, Linarius) { 
-#  packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2 and accepting them") 
+  packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2 and accepting them") 
 #}
 
 #Alleles frequency & heterozygocy 
@@ -73,7 +73,7 @@ Contingence[,limit<=PV]
 }
 #############################################################################################################################################################################
 #Identity of population 
-BIC<-function(XX,factor,ploidy=2) { 
+BjIC<-function(XX,factor,ploidy=2) { 
 	allele.frec(XX,ploidy=ploidy)->frec_all
 	frec_all<-(frec_all[,ncol(frec_all)])
 	levels<-sort(unique(factor))
@@ -90,7 +90,7 @@ return(BIC_VALUE)
 	}
 	#############################################################################################################################################################################
 #boot of BIC
-Boot.BIC<-function(XX,factor,ploidy,nboot=100) {
+Boot.BjIC<-function(XX,factor,ploidy,nboot=100) {
 	boot<-vector(mode = "numeric", length = nboot)
 	len<-(1:nboot)
 	allele.frec(XX,ploidy=ploidy)->frec_all
@@ -122,3 +122,92 @@ col.edge.phylo<-function (phy,groups,color=c(2,3,4,5),root.color=1)
 	(Edge[order(Edge[,4], decreasing=F),])->Edge
 	return(Edge[,3])
 	}
+	
+	#############################################################################################################################################################################
+	`dist.pop` <-function(xx,pop, method="reynolds" ,ploidy=2)
+{
+	if (length(ploidy) == 1) 
+	ploidy<-rep(ploidy,length(rownames(xx)))
+	if (length(rownames(xx)) != length(ploidy)) 
+        stop("Mismatch of number of samples and number of ploidy ID")
+	if (!is.na(pmatch(method, "euclidian"))) 	
+	if (length(rownames(xx)) != length(pop)) 
+        stop("Mismatch of number of samples and number of population ID")
+	if (!is.na(pmatch(method, "euclidian"))) 
+        method <- "euclidean"
+    METHODS <- c("euclidean", "reynolds", "roger", "nei")
+    method <- pmatch(method, METHODS)
+    inm <- METHODS[method]
+    if (is.na(method)) 
+        stop("invalid distance method")
+    if (method == -1) 
+        stop("ambiguous distance method")
+if (method == 1) 
+    FUN<-Euclide.dist
+if (method == 2) 
+    FUN<-Reynolds.dist
+if (method == 3) 
+    FUN<-Roger.dist
+if (method == 4) 
+    FUN<-Nei.dist
+if (method >= 5) 
+      stop("Huston, we've got a problem")   
+	pop.lev<-unique(pop)
+  dMat <- matrix(0,ncol=length(pop.lev),nrow=length(pop.lev))
+  colnames(dMat) <- pop.lev -> rownames(dMat)
+  
+  for(i in 1:(length(pop.lev)-1))
+  {
+    for(j in (i+1):length(pop.lev))
+    {
+      a <- FUN(xx[pop==pop.lev[i],],xx[pop==pop.lev[j],], ploidy[pop==pop.lev[i]], ploidy[pop==pop.lev[j]])
+      dMat[i,j] <- a
+      dMat[j,i] <- a
+     # return(ploidy[pop==pop.lev[j]])
+    }
+  }
+  dMat<-as.dist(dMat)
+return(dMat)
+}
+
+	#############################################################################################################################################################################
+distGPS <-function(lat,lon,names,model="lambert")
+{
+		if (length(lat) != length(lon)) 
+        stop("Latitudes and Longitudes difer in size")
+        if (length(lat) != length(names)) 
+        stop("Incorect number of names")
+ #Methode
+     METHODS <- c("lambert", "spherical", "potato")
+    model <- pmatch(model, METHODS)
+    #inm <- METHODS[model]
+    if (is.na(model)) 
+        stop("invalid distance method")
+    if (model == -1) 
+        stop("ambiguous distance method")
+if (model == 1) 
+    FUN<-dist.gps.Lambert
+if (model == 2) 
+    FUN<-dist.gps.cst
+if (model == 3) 
+    FUN<-dist.gps.var
+if (model >= 4) 
+      stop("Huston, we've got a problem") 
+#Computation             
+	  dMat <- matrix(0,ncol=length(lon),nrow=length(lon))
+  colnames(dMat) <- names
+  rownames(dMat) <- names
+  for(i in 1:(length(lon)-1))
+  {
+    for(j in (i+1):length(lon))
+    {
+      a <- FUN(lat[i],lon[i],lat[j],lon[j])
+      if((lat[i] == lat[j])&&(lon[i]==lon[j])) a<-0
+      dMat[i,j] <- a
+      dMat[j,i] <- a
+    }
+  }
+dMat<-as.dist(dMat)  
+return(dMat)
+}
+
