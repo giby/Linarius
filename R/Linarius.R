@@ -3,7 +3,7 @@
 #############################################################################################################################################################################
 
 #.onAttach <- function(Linarius, Linarius) { 
-  packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2 and accepting them") 
+  packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2k and accepting them") 
 #}
 
 #Alleles frequency & heterozygocy 
@@ -117,14 +117,14 @@ col.edge.phylo<-function (phy,groups,color=c(2,3,4,5),root.color=1)
 	col.edge<-rep(root.color,length(phy$edge[,1]))
 	cbind(phy$edge,col.edge)->Edge
 	cbind(Edge,(1:length(phy$edge[,1])))-> Edge
-	(Edge[order(Edge[,2], decreasing=F),])->Edge
+	(Edge[order(as.integer(Edge[,2]), decreasing=F),])->Edge
 	groups->Edge[1:length(phy$tip),3]
-	(Edge[order(Edge[,4], decreasing=F),])->Edge
+	(Edge[order(as.integer(Edge[,4]), decreasing=F),])->Edge
 	return(Edge[,3])
-	}
+}
 	
 	#############################################################################################################################################################################
-	`dist.pop` <-function(xx,pop, method="reynolds" ,ploidy=2)
+	dist.pop<-function(xx,pop, method="reynolds" ,ploidy=2)
 {
 	if (length(ploidy) == 1) 
 	ploidy<-rep(ploidy,length(rownames(xx)))
@@ -137,19 +137,11 @@ col.edge.phylo<-function (phy,groups,color=c(2,3,4,5),root.color=1)
         method <- "euclidean"
     METHODS <- c("euclidean", "reynolds", "roger", "nei")
     method <- pmatch(method, METHODS)
-    inm <- METHODS[method]
     if (is.na(method)) 
         stop("invalid distance method")
     if (method == -1) 
         stop("ambiguous distance method")
-if (method == 1) 
-    FUN<-Euclide.dist
-if (method == 2) 
-    FUN<-Reynolds.dist
-if (method == 3) 
-    FUN<-Roger.dist
-if (method == 4) 
-    FUN<-Nei.dist
+        FUN<-c(Euclide.dist,Reynolds.dist,Roger.dist,Nei.dist)[[method]]
 if (method >= 5) 
       stop("Huston, we've got a problem")   
 	pop.lev<-unique(pop)
@@ -180,17 +172,11 @@ distGPS <-function(lat,lon,names,model="lambert")
  #Methode
      METHODS <- c("lambert", "spherical", "potato")
     model <- pmatch(model, METHODS)
-    #inm <- METHODS[model]
     if (is.na(model)) 
         stop("invalid distance method")
     if (model == -1) 
         stop("ambiguous distance method")
-if (model == 1) 
-    FUN<-dist.gps.Lambert
-if (model == 2) 
-    FUN<-dist.gps.cst
-if (model == 3) 
-    FUN<-dist.gps.var
+FUN<-c(dist.gps.Lambert,dist.gps.cst,dist.gps.var)[[model]]
 if (model >= 4) 
       stop("Huston, we've got a problem") 
 #Computation             

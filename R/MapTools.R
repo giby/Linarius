@@ -133,11 +133,22 @@ return(RGB)
 ####                                                            		         Scale				                                                                     ####
 #############################################################################################################################################################################
 
-scalebar <- function(loc,length,unit="km" ,degrees = TRUE,cex=par("cex"), ...) { 
+scalebar <- function(loc,length,unit="km" ,degrees = TRUE,cex=par("cex"),scale=1, ...) { 
 	if(missing(loc)) stop("loc is missing") 
 	if(missing(length)) stop("length is missing") 
+	 UNIT <- c("km", "mi", "nmi","m","li")
+    Unit <- pmatch(unit, UNIT)
+    if ((degrees == TRUE)&&(is.na(Unit))) 
+        stop("invalid distance unit")
+    if ((degrees == TRUE)&&(Unit == -1)) 
+        stop("ambiguous distance unit")
 	z <- c(0,length/c(4,2,4/3,1),length*1.1)+loc[1] 
+	if(degrees == FALSE) length<-length/scale
+	if((degrees == TRUE)&&(unit=="m"))  length<-length/1000
 	if(degrees == TRUE) length<-180*(acos((cos(length/6371)-sin(loc[2]*pi/180)*sin(loc[2]*pi/180))/(cos(loc[2]*pi/180)*cos(loc[2]*pi/180))))/pi
+	if((degrees == TRUE)&&(unit=="mi"))  length<-length*1.609347
+	if((degrees == TRUE)&&(unit=="nmi"))  length<-length*1.852
+	if((degrees == TRUE)&&(unit=="li"))  length<-length*3.248
 	x <- c(0,length/c(4,2,4/3,1),length*1.1)+loc[1] 
 	y <- c(0,length/(10*3:1))+loc[2] 
 	cols <- rep(c("black","white"),2) 
@@ -146,3 +157,24 @@ scalebar <- function(loc,length,unit="km" ,degrees = TRUE,cex=par("cex"), ...) {
 	 labels <- z[c(1,3)]-loc[1]
 labels <- append(labels,paste(z[5]-loc[1],unit)) 
 text(x[c(1,3,5)],y[4],labels=labels,cex,pos=3,offset=0) }
+
+# Test of a more accuarate scale: No visible change - discarted 
+#scalebar2 <- function(loc,length,unit="km" ,degrees = TRUE,cex=par("cex"),scale=1, ...) { 
+#	if(missing(loc)) stop("loc is missing") 
+#	if(missing(length)) stop("length is missing") 
+#	z <- c(0,length/c(4,2,4/3,1),length*1.1)+loc[1] 
+#	if(degrees == FALSE) length<-length/scale
+#	if((degrees == TRUE)&&(unit=="m"))  length<-length/1000
+#	Rad<-(abs(loc[2])*6356.752+(90-abs(loc[2]))*6378.137)/90
+#	if(degrees == TRUE) length<-180*(acos((cos(length/Rad)-sin(loc[2]*pi/180)*sin(loc[2]*pi/180))/(cos(loc[2]*pi/180)*cos(loc[2]*pi/180))))/pi
+#	if((degrees == TRUE)&&(unit=="mi"))  length<-length*1.609347
+#	if((degrees == TRUE)&&(unit=="nmi"))  length<-length*1.852
+#	if((degrees == TRUE)&&(unit=="li"))  length<-length*3.248
+#	x <- c(0,length/c(4,2,4/3,1),length*1.1)+loc[1] 
+#	y <- c(0,length/(10*3:1))+loc[2] 
+#	cols <- rep(c("black","white"),2) 
+#	for (i in 1:4) rect(x[i],y[1],x[i+1],y[2],col=cols[i])
+#	 for (i in 1:5) segments(x[i],y[2],x[i],y[3]) 
+#	 labels <- z[c(1,3)]-loc[1]
+#labels <- append(labels,paste(z[5]-loc[1],unit)) 
+#text(x[c(1,3,5)],y[4],labels=labels,cex,pos=3,offset=0) }
