@@ -3,7 +3,7 @@
 #############################################################################################################################################################################
 
 #.onAttach <- function(Linarius, Linarius) { 
-  packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2k and accepting them") 
+#  packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2k and accepting them") 
 #}
 
 #Alleles frequency & heterozygocy 
