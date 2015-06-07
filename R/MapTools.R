@@ -135,7 +135,7 @@ return(RGB)
 #############################################################################################################################################################################
 
 
-heat.map<- function(XX,MAX=NULL) #,pop,red,green,blue)
+heat.values<- function(XX,MAX=NULL) #,pop,red,green,blue)
 {
  max(XX)->MAX
     matrix(nrow = length(XX), ncol = 3)->RGB
@@ -146,6 +146,35 @@ RGB[,3]<-0
     colnames(RGB)<-c("R","G","B")
     return(RGB)
     
+}
+
+heat.points<- function(XX, coord, MAX=max(XX), loc=c(0,0),length=1000 , unit="" ,pch=16 , cex=par("cex"), digits=0 , offset=0) #,pop,red,green,blue)
+{
+
+    matrix(nrow = length(XX), ncol = 3)->RGB
+RGB[,1]<-(XX/MAX)
+RGB[,2]<-(MAX-XX)/MAX
+RGB[,3]<-0
+
+    colnames(RGB)<-c("R","G","B")
+   # return(RGB)
+    points(coord[,1],coord[,2],col=rgb(RGB[,1], RGB[,2], RGB[,3], max = 1),pch=pch) 
+    ### Bar
+x<- (0:255*length/255)+loc[1]
+y <- c(0,length/(10*3:1))+loc[2]
+ cols<-NULL
+    cols <- for (i in 0:255) c(cols,rgb((i/255),(255-i)/255,0))
+
+x <- ((length*0:255)/155)+loc[1] 
+y <- c(0,length/(2*3:1))+loc[2] 
+
+  
+    	for (i in 1:256) rect(x[i],y[1],x[i+1],y[2],col= c(cols,rgb(((i-1)/255),(255-(i-1))/255,0) ),border = FALSE)
+    	rect(x[1],y[1],x[256],y[2])
+	 for (i in c(1,128,256)) segments(x[i],y[2],x[i],y[3]) 
+	
+labels <-round(c(0,MAX/2,MAX ), digits = digits)
+text(x[c(1,128,256)],y[3],labels=labels,cex,pos=3, offset=offset) 	
 }
 
 
