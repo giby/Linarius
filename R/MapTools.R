@@ -169,7 +169,7 @@ x <- ((length*0:255)/155)+loc[1]
 y <- c(0,length/(2*3:1))+loc[2] 
 
   
-    	for (i in 1:256) rect(x[i],y[1],x[i+1],y[2],col= c(cols,rgb(((i-1)/255),(255-(i-1))/255,0) ),border = FALSE)
+    	for (i in 1:256) rect(x[i],y[1],x[i+1],y[2],col= c(cols,rgb(((i-1)/255),(255-(i-1))/255,0) ),border = NA)
     	rect(x[1],y[1],x[256],y[2])
 	 for (i in c(1,128,256)) segments(x[i],y[2],x[i],y[3]) 
 	
