@@ -7,6 +7,13 @@
 #}
 
 #Alleles frequency & heterozygocy 
+#' @title  Function to count theorical allele amount with Dominant markers and mixed ploidy levels
+#'
+#' @description This function aims at counting allele presence and absence in a ballance population, this considering the ploidy level.
+#' 
+#' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
+#' @param ploidy interger or vector, ploidy level of the population or individuals 
+#' 
 allele.count<- function(xx,ploidy=2) {
 plolev<-sort(unique(ploidy))
 NULL->alco
@@ -18,6 +25,14 @@ return(alco)
 }
 #############################################################################################################################################################################
 #sep ploidy al frec
+#' @title  Calculation of Allele hetherozygocy with Dominant markers and mixed ploidy levels
+#'
+#' @description This function aims at elaluating allele hetherozygocy in a ballance population, this considering the ploidy level.  Then It calculated an weighted avarage
+#' 
+#' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
+#' @param ploidy interger or vector, ploidy level of the population or individuals 
+#' 
+
 allele.frec<-function(xx,ploidy=2) {
 plolev<-sort(unique(ploidy))
 NULL->alco
@@ -34,6 +49,14 @@ return(alco)
 }
 #############################################################################################################################################################################
 #sep ploidy al frec 
+#' @title  Calculation of Allele frequency with Dominant markers and mixed ploidy levels
+#'
+#' @description This function aims at elaluating allele frequency in a ballance population, this considering the ploidy level. Then It calculated an weighted avarage
+#' 
+#' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
+#' @param ploidy interger or vector, ploidy level of the population or individuals 
+#' 
+
 allele.hetero<-function(xx,ploidy=2) {
 plolev<-sort(unique(ploidy))
 NULL->alco
@@ -44,7 +67,19 @@ colnames(alco)<-noms
 return(alco)
 }
 #############################################################################################################################################################################
-#generate Fake Data
+#' @title Generate a fake dataset fitting allele frequencies and ploidies. 
+#'
+#' @description 
+#' This function generate a random binary datafram with in row: simulated individuals, and in colomn: alleles. 
+#' The aim of this function is to test hypothesis, and shall not be used for publishing imaginary results (See licence for more information). 
+#' @param frec allele frequencies: a vector providing the allele frequency of all alleles, every single frequency have to be between 0 and 1
+#' @param ploidy ploidy level of every individuals: a vector providing ploidy level of every single individual. Normally integers. 
+#' 
+#' @note 
+#' Whenever you make something out of this function you have to precise that there are generated data. 
+#' You shall not use this for getting fake experimental data (it constitues a violation of this package licence ).
+#' Whenever you use that function for bad purposes I will find you, get you and kick your ass! 
+
 datagen<-function(frec,ploidy) {
 fakedata<-matrix(data = NA, nrow = length(ploidy), ncol = length(frec), byrow = FALSE,  dimnames = NULL)
 plolev<-unique(ploidy)
