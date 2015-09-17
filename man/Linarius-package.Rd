@@ -15,7 +15,7 @@ Version: \tab 0.0.1\cr
 Date: \tab 2014-03-31\cr
 License: \tab Non-free ; Non-Copyleft ; Open-Source ; Non-modifyable ;  Purchasse for free \cr
 }
-Use this package for analysis of dominant data (AFLP; ISSR; IRAP; REMAP; iPBS; etc… ) 
+Use this package for analysis of dominant data (AFLP; ISSR; IRAP; REMAP; iPBS; etc. ) 
 }
 \author{
 Benjamin Leduc <gbl1@hi.is> 

@@ -1,9 +1,9 @@
 Package: Linarius
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
+Title: Linarius: A package for phylogeographic studies, with all functions that are missing in both phylogenetic and geographical packages
+Version: 0.0.1
 Date: 2014-03-31
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Benjamin Leduc 
+Maintainer: Benjamin Leduc <gbl1@hi.is>
+Description: A package for phylogeographic studies. It includes functions for phylogenetics analysis which were missing from usual packages. and geographical feature which were also missing. Some functions might benefit either geneticists or geographs, some other are specific for a phylogeographic approach. Geneticist should noticed that this package is designed for dominant markers and can deal with polyploid organisms, including mixed ploidy levels. Geograph might noticed it was not concieved by an expert in geographical analysis, therefor pure geographical features are simple, but was globally missing in R.  
+License: L2K, read the Licence.l2k file before any use of this package 
