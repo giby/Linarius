@@ -6,7 +6,8 @@
 Analyse of dominant marker data with mixed ploidy levels. 
 }
 \description{
-Expermental package in order to analyse dominant marker data with mixed ploidy levels. 
+Expermental package in order to analyse dominant marker data with mixed ploidy levels.
+}
 \details{
 \tabular{ll}{
 Package: \tab Linarius\cr
