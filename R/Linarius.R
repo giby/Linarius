@@ -7,13 +7,19 @@
 #}
 
 #Alleles frequency & heterozygocy 
-#' @title  Function to count theorical allele amount with Dominant markers and mixed ploidy levels
+#' @title  Function to count allele presence and absence of dominant markers according to ploidy levels
 #'
 #' @description This function aims at counting allele presence and absence in a ballance population, this considering the ploidy level.
 #' 
 #' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
 #' @param ploidy interger or vector, ploidy level of the population or individuals 
+#' @note There is a little biais on small sized sample.
 #' 
+#'@examples 
+#' head(Betula)
+#' allele.count(Betula,code$Ploidy)
+#' 
+
 allele.count<- function(xx,ploidy=2) {
 plolev<-sort(unique(ploidy))
 NULL->alco
@@ -32,7 +38,10 @@ return(alco)
 #' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
 #' @param ploidy interger or vector, ploidy level of the population or individuals 
 #' 
-
+#'@examples 
+#' head(Betula)
+#' allele.frec(Betula,code$Ploidy)
+#' 
 allele.frec<-function(xx,ploidy=2) {
 plolev<-sort(unique(ploidy))
 NULL->alco
@@ -55,8 +64,12 @@ return(alco)
 #' 
 #' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
 #' @param ploidy interger or vector, ploidy level of the population or individuals 
+#' @note There is a little biais on small sized sample.
 #' 
-
+#'@examples 
+#' data(Betula)
+#' allele.hetero(Betula,code$Ploidy)
+#' 
 allele.hetero<-function(xx,ploidy=2) {
 plolev<-sort(unique(ploidy))
 NULL->alco
@@ -144,7 +157,27 @@ return(boot)
 }
 
 	#############################################################################################################################################################################
-#Coloring terminal branch of trees 
+#' @title Coloring terminal branch of trees
+#'   
+#'
+#' @description Generate colors for terminal edge branch of a phylogenic tree
+#' 
+#' @param phy A tree of class phylo
+#' @param groups A vector indicating what should be of the same color
+#' @param color A vector indicating the color to choose
+#' @param root.color a single color, to use for non terminal edge 
+#'@examples 
+#' data(Betula)
+#' require(vegan)
+#' require(ade4)
+#' require(ape)
+#' dist=vegdist(Betula, method="jaccard", binary=TRUE, diag=FALSE, upper=FALSE, na.rm = FALSE)
+#' dendro=hclust(dist,"complete")
+#' dendro2<-as.phylo(dendro,cex=0.5)
+#' plot(dendro2,,type="u",lab4ut="axial",font=1, adj=1,label.offset = 0.01,edge.color = col.edge.phylo(dendro2,code$Ploidy),tip.color = code$Ploidy)
+
+
+
 
 col.edge.phylo<-function (phy,groups,color=c(2,3,4,5),root.color=1)
 {
@@ -159,6 +192,20 @@ col.edge.phylo<-function (phy,groups,color=c(2,3,4,5),root.color=1)
 }
 	
 	#############################################################################################################################################################################
+#' @title Compute genetic distances between populations 
+#'   
+#'
+#' @description Returns a dist object with genetic distences between populations. 4 indexes are availlable: "Euclidean", "Reynolds", "Roger" and "Nei".
+#' 
+#' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
+#' @param pop A vector informing of population every sample belongs to 
+#' @param method A method for computing genetic distence between populations, can be any unambigous abreviation of "euclidean", "reynolds", "roger" or "nei"
+#' @param ploidy interger or vector, ploidy level of the population or individuals 
+#' @examples 
+#' data(Betula)
+#' dist.pop(Betula, code$Pop,ploidy=code$Ploidy,method="rey") 
+
+	
 	dist.pop<-function(xx,pop, method="reynolds" ,ploidy=2)
 {
 	if (length(ploidy) == 1) 
@@ -198,6 +245,18 @@ return(dMat)
 }
 
 	#############################################################################################################################################################################
+#' @title Compute distance between GPS points 
+#'   
+#'
+#' @description Returns a dist object with  distences between location in km 
+#' 
+#' @param lon A vector with longitudes 
+#' @param lat A vector with latitudes
+#' @param names A vector with names of position
+#' @param model A model for computing distence between places, can be any unambigous abreviation of "lambert", "spherical" or "potato"
+#' @examples 
+#' data(Betula)
+#' distGPS(code$Lat,code$Long,rownames(code))
 distGPS <-function(lat,lon,names,model="lambert")
 {
 		if (length(lat) != length(lon)) 

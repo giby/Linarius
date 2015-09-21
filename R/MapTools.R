@@ -3,7 +3,27 @@
 #############################################################################################################################################################################
 
 #Basic
+#' @title  Adapt distence of GPS coordinates according to distences to a single points
+#'
+#' @description 
+#' This function aims to prepare anamorphosis maps or cartograms.
+#' This function adapts GPS coordinates according to a focal point. The final Coordinates reflect the distence to the focal point but the distence between two image points is meaningless. 
+#' 
+#' @param xx Coordinates of the points to transform 
+#' @param focal Focal points of the anamorphosis
+#' @param dist A vector 
+#' @param Dist.ref Murphy's Constant
+#'
+#' 
+#' @examples
+#' data(Leymus)
+#' dist.pop(Leymus,Leypop, ploidy=8)->dist.ley
+#' expend.coord(locations[2:14,],locations[1,],dist.ley[1:13],dist.coord(locations[2:14,]))
+#' 
+#' 
+
 expend.coord<-function(xx,focal=c(64.13806,-21.92861),dist,Dist.Ref=0.8) {
+	if(class(xx) != "data.frame") xx<-as.data.frame(xx)
 	cbind((xx[,1]-focal[1]),(xx[,2]-focal[2]))->centre
 (centre*dist/Dist.Ref)->redu
 cbind(rownames(xx),xx,(redu[,1]+focal[1]),(redu[,2]+focal[2]))->NeoCoord
@@ -27,8 +47,28 @@ return(NeoCoord)
 }
 
 #Boot 
+#' @title  Generate non-focal anamorphosis 
+#'
+#' @description 
+#' This function aims to prepare anamorphosis maps or cartograms.
+#' 
+#' @param xx A data frame contening the coordinates of the points to transform 
+#' @param dist A dist object with the distence to outline by anamorphosis
+#' @param nboot Times you need for your coffee break in seconds 
+#' @examples
+#' data(Leymus)
+#' dist.pop(Leymus,Leypop, ploidy=8)->dist.ley
+#' boot.reshape.coord(locations,dist.ley,nboot=100)
+#' 
+#'
+#' 
+#' 
+#' 
+
 
 boot.reshape.coord<-function(xx,dist,nboot=10) {
+	        if(class(xx) != "data.frame") xx<-as.data.frame(xx)
+			if(class(dist) != "matrix") dist <-as.matrix(dist)
 			cbind(xx,dist)->yy
 			
 			NULL->BOOT.lat# <-matrix(data = NA, nrow = nrow(xx), ncol = nboot)
@@ -52,6 +92,17 @@ return(lati)
 }
 
 #cbind(uniqueGPS(datgps),DIST)[sample(nrow(cbind(uniqueGPS(datgps),DIST))),]
+#' @title  Computes Murphy's constant 
+#'
+#' @description Computes Murphy's constant 
+#' 
+#' @param xx A datafram of coordinates 
+#'
+#' 
+#'
+#' 
+#' 
+#' 
 
 dist.coord<-function(xx) {
 	focal<-colMeans(xx)
@@ -85,6 +136,19 @@ rownames(lati)<-rownames(xx)
 return(lati)
 
 }
+#' @title  Harmonize anamorphogram with original map 
+#'
+#' @description 
+#' This function aims to prepare anamorphosis maps or cartograms.
+#' This function centers and homogenized the distances and positions of image points according to real points. 
+#' @param xx Anamorphosis points coordinate
+#' @param yy Real points coordinates
+#' @note Use this function if the difference of position and/or size between image and source is too big. This function is only a cosmetic feature usefull if your public can misinterprate the cartogram. 
+#' 
+#'
+#' 
+#' 
+#' 
 
 harmonize.coord<-function(xx,yy) {
 	focal<-colMeans(xx)
@@ -102,6 +166,25 @@ return(NeoCoord)
 ####                                                            		         Tripolar Heat map	                                                                     ####
 #############################################################################################################################################################################
 
+#' @title Transform genotype in RGB colors 
+#'
+#' @description 
+#' This function aims to create a tri-polar heatmap. 
+#' A tripolar heat map aims to indicate relatedness between populations. 
+#' 
+#' @param XX A binary datafram of genotypes, individuals as row and alleles as column
+#' @param pop A vector informing of population every sample belongs to 
+#' @param red,green,blue A vector of alleles to put in a single color group
+#'
+#' @examples
+#' require(sp)
+#' data(Leymus)
+#' RGB.pop(Leymus,pop=Leypop,red=c("GreenExtra.160","GreenExtra.105","GreenExtra.176","Green1.188"),green=c("BlueExtra.127","Blue.add.128","BlueExtra.222","Blue.add.129","BlueExtra.182","BlueExtra.131") ,blue=c("Green1.120","GreenExtra.136","Green1.193","Green1.169","Green1.133"))->col.RGB
+#' plot(west)
+#' points(locations,col=rgb(col.RGB, max = 255) ,pch=16,cex=2)
+#' 
+#' 
+#' 
 
 RGB.pop<- function(XX,pop,red,green,blue) 
 { 
@@ -133,6 +216,19 @@ return(RGB)
 #############################################################################################################################################################################
 ####                                                            		         Heat map	                                                                             ####
 #############################################################################################################################################################################
+#' @title  Returns values of color of points for heat-map in RGB system 
+#'
+#' @description Makes heat map 
+#' 
+#' @param XX something
+#' @param MAX I guess it was maximum 
+#'
+#' 
+#'
+#' @examples
+#' data(Kenya) 
+#' heat.values(Kenya$Asconc)
+#' 
 
 
 heat.values<- function(XX,MAX=NULL) #,pop,red,green,blue)
@@ -147,6 +243,26 @@ RGB[,3]<-0
     return(RGB)
     
 }
+
+#' @title  Makes heat map 
+#'
+#' @description Plot color points according to an alternate variable.  
+#' 
+#' @param XX something
+#' @param MAX I guess it was maximum 
+#' @param loc Position of scalebare 
+#' @param length Length of scalebare
+#' @param unit Unit of scalebare
+#' 
+#'
+#' @examples
+#' require(sp)
+#' data(Kenya) 
+#' plot(Geotermal.Area)
+#' plot(Hells.NP,add=T,col="grey98") 
+#' heat.points(Kenya$Asconc, coord ,loc=c(205000,9896000),offset=0.1,length=3000)
+#' 
+
 
 heat.points<- function(XX, coord, MAX=max(XX), loc=c(0,0),length=1000 , unit="" ,pch=16 , cex=par("cex"), digits=0 , offset=0) #,pop,red,green,blue)
 {
@@ -181,6 +297,23 @@ text(x[c(1,128,256)],y[3],labels=labels,cex,pos=3, offset=offset)
 #############################################################################################################################################################################
 ####                                                            		         Scale				                                                                     ####
 #############################################################################################################################################################################
+#' @title  Draw a scalebar
+#'
+#' @description Draw a scalebar on a map, 
+#' 
+#' @param loc Where to put the bar
+#' @param lenght how long should it be
+#' @param unit The unit to use on for the scalebare. For autocomputed size, several units are possible: kilometer: "km", mile "mi", nautical mile "nmi", meter "m" or league "li"
+#' @param degrees A logical argument TRUE is the shape file is in degrees and FALSE is the shapefile is projected 
+#' @param scale Ratio between projected map unit and physical distence unit. To be use if degrees = FALSE 
+#' 
+#' @examples 
+#'
+#' require(sp)
+#' data(Leymus)
+#' plot(west)
+#' scalebar(c(-20.33,63.3),8)
+#' 
 
 scalebar <- function(loc,length,unit="km" ,degrees = TRUE,cex=par("cex"),scale=1, ...) { 
 	if(missing(loc)) stop("loc is missing") 
