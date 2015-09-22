@@ -13,7 +13,7 @@ dist.pop(xx, pop, method = "reynolds", ploidy = 2)
 
 \item{method}{A method for computing genetic distence between populations, can be any unambigous abreviation of "euclidean", "reynolds", "roger" or "nei"}
 
-\item{ploidy}{interger or vector, ploidy level of the population or individuals}
+\item{ploidy}{Interger or vector, ploidy level of the population or individuals}
 }
 \description{
 Returns a dist object with genetic distences between populations. 4 indexes are availlable: "Euclidean", "Reynolds", "Roger" and "Nei".

@@ -2,16 +2,20 @@
 % Please edit documentation in R/MapTools.R
 \name{heat.values}
 \alias{heat.values}
-\title{Makes heat map}
+\title{Returns values of color of points for heat-map in RGB system}
 \usage{
 heat.values(XX, MAX = NULL)
 }
 \arguments{
-\item{XX}{something}
+\item{XX}{Vector of the variable to color}
 
-\item{MAX}{I guess it was maximum}
+\item{MAX}{Value supposed to be the hottest. If Nothing is precised, the maximum value of the dataset is chosen.}
 }
 \description{
-Makes heat map
+Returns values of color of points for heat-map in RGB system according to the high of the value provided.
+}
+\examples{
+data(Kenya)
+heat.values(Kenya$Asconc)
 }
 

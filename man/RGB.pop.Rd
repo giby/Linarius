@@ -15,7 +15,7 @@ RGB.pop(XX, pop, red, green, blue)
 }
 \description{
 This function aims to create a tri-polar heatmap.
-a tripolar heat map aims to indicate relatedness between populations.
+A tripolar heat map aims to indicate relatedness between populations.
 }
 \examples{
 require(sp)

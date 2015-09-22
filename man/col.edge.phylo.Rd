@@ -13,10 +13,13 @@ col.edge.phylo(phy, groups, color = c(2, 3, 4, 5), root.color = 1)
 
 \item{color}{A vector indicating the color to choose}
 
-\item{root.color}{a single color, to use for non terminal edge}
+\item{root.color}{A single color, to use for non terminal edge}
 }
 \description{
 Generate colors for terminal edge branch of a phylogenic tree
+}
+\note{
+This function should be used with the package ade4
 }
 \examples{
 data(Betula)
@@ -27,5 +30,8 @@ dist=vegdist(Betula, method="jaccard", binary=TRUE, diag=FALSE, upper=FALSE, na.
 dendro=hclust(dist,"complete")
 dendro2<-as.phylo(dendro,cex=0.5)
 plot(dendro2,,type="u",lab4ut="axial",font=1, adj=1,label.offset = 0.01,edge.color = col.edge.phylo(dendro2,code$Ploidy),tip.color = code$Ploidy)
+}
+\seealso{
+ade4
 }
 

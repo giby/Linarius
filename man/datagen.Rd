@@ -7,12 +7,12 @@
 datagen(frec, ploidy)
 }
 \arguments{
-\item{frec}{allele frequencies: a vector providing the allele frequency of all alleles, every single frequency have to be between 0 and 1}
+\item{frec}{Allele frequencies: a vector providing the allele frequency of all alleles, every single frequency have to be between 0 and 1}
 
-\item{ploidy}{ploidy level of every individuals: a vector providing ploidy level of every single individual. Normally integers.}
+\item{ploidy}{Ploidy level of every individuals: a vector providing ploidy level of every single individual. Normally integers.}
 }
 \description{
-This function generate a random binary datafram with in row: simulated individuals, and in colomn: alleles.
+This function generates a random binary datafram with in row: simulated individuals, and in colomn: alleles.
 The aim of this function is to test hypothesis, and shall not be used for publishing imaginary results (See licence for more information).
 }
 \note{

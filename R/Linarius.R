@@ -13,8 +13,7 @@ packageStartupMessage("This is NOT a free software, not reading the licence is a
 #' @description This function aims at counting allele presence and absence in a ballance population, this considering the ploidy level.
 #' 
 #' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
-#' @param ploidy interger or vector, ploidy level of the population or individuals 
-#' @note There is a little biais on small sized sample.
+#' @param ploidy Interger or vector, ploidy level of the population or individuals 
 #' 
 #'@examples 
 #' head(Betula)
@@ -34,12 +33,14 @@ return(alco)
 #sep ploidy al frec
 #' @title  Calculation of Allele hetherozygocy with Dominant markers and mixed ploidy levels
 #'
-#' @description This function aims at elaluating allele hetherozygocy in a ballance population, this considering the ploidy level.  Then It calculated an weighted avarage
+#' @description This function aims at evaluating allele hetherozygocy in a ballance population, this considering the ploidy level.  Then It calculated an weighted avarage
 #' 
 #' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
-#' @param ploidy interger or vector, ploidy level of the population or individuals 
+#' @param ploidy Interger or vector, ploidy level of the population or individuals 
 #' 
-#'@examples 
+#' @note There is a little biais on small sized sample.
+#' 
+#' @examples 
 #' head(Betula)
 #' allele.frec(Betula,code$Ploidy)
 #' 
@@ -61,10 +62,10 @@ return(alco)
 #sep ploidy al frec 
 #' @title  Calculation of Allele frequency with Dominant markers and mixed ploidy levels
 #'
-#' @description This function aims at elaluating allele frequency in a ballance population, this considering the ploidy level. Then It calculated an weighted avarage
+#' @description This function aims at evaluating allele frequency in a ballance population, this considering the ploidy level. Then It calculated an weighted avarage
 #' 
 #' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
-#' @param ploidy interger or vector, ploidy level of the population or individuals 
+#' @param ploidy Interger or vector, ploidy level of the population or individuals 
 #' @note There is a little biais on small sized sample.
 #' 
 #'@examples 
@@ -84,10 +85,10 @@ return(alco)
 #' @title Generate a fake dataset fitting allele frequencies and ploidies. 
 #'
 #' @description 
-#' This function generate a random binary datafram with in row: simulated individuals, and in colomn: alleles. 
+#' This function generates a random binary datafram with in row: simulated individuals, and in colomn: alleles. 
 #' The aim of this function is to test hypothesis, and shall not be used for publishing imaginary results (See licence for more information). 
-#' @param frec allele frequencies: a vector providing the allele frequency of all alleles, every single frequency have to be between 0 and 1
-#' @param ploidy ploidy level of every individuals: a vector providing ploidy level of every single individual. Normally integers. 
+#' @param frec Allele frequencies: a vector providing the allele frequency of all alleles, every single frequency have to be between 0 and 1
+#' @param ploidy Ploidy level of every individuals: a vector providing ploidy level of every single individual. Normally integers. 
 #' 
 #' @note 
 #' Whenever you make something out of this function you have to precise that there are generated data. 
@@ -166,8 +167,10 @@ return(boot)
 #' @param phy A tree of class phylo
 #' @param groups A vector indicating what should be of the same color
 #' @param color A vector indicating the color to choose
-#' @param root.color a single color, to use for non terminal edge 
-#'@examples 
+#' @param root.color A single color, to use for non terminal edge 
+#' @note This function should be used with the package ade4 
+#' @seealso ade4
+#' @examples 
 #' data(Betula)
 #' require(vegan)
 #' require(ade4)
@@ -201,7 +204,7 @@ col.edge.phylo<-function (phy,groups,color=c(2,3,4,5),root.color=1)
 #' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
 #' @param pop A vector informing of population every sample belongs to 
 #' @param method A method for computing genetic distence between populations, can be any unambigous abreviation of "euclidean", "reynolds", "roger" or "nei"
-#' @param ploidy interger or vector, ploidy level of the population or individuals 
+#' @param ploidy Interger or vector, ploidy level of the population or individuals 
 #' @examples 
 #' data(Betula)
 #' dist.pop(Betula, code$Pop,ploidy=code$Ploidy,method="rey") 

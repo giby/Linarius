@@ -7,7 +7,7 @@
 boot.reshape.coord(xx, dist, nboot = 10)
 }
 \arguments{
-\item{xx}{Coordinates of the points to transform}
+\item{xx}{A data frame contening the coordinates of the points to transform. First colomn is longitude, second is latitude.}
 
 \item{dist}{A dist object with the distence to outline by anamorphosis}
 
@@ -15,5 +15,10 @@ boot.reshape.coord(xx, dist, nboot = 10)
 }
 \description{
 This function aims to prepare anamorphosis maps or cartograms.
+}
+\examples{
+data(Leymus)
+dist.pop(Leymus,Leypop, ploidy=8)->dist.ley
+boot.reshape.coord(locations,dist.ley,nboot=100)
 }
 

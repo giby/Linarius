@@ -9,13 +9,10 @@ allele.count(xx, ploidy = 2)
 \arguments{
 \item{xx}{A binary datafram of genotypes, individuals as row and alleles as column}
 
-\item{ploidy}{interger or vector, ploidy level of the population or individuals}
+\item{ploidy}{Interger or vector, ploidy level of the population or individuals}
 }
 \description{
 This function aims at counting allele presence and absence in a ballance population, this considering the ploidy level.
-}
-\note{
-There is a little biais on small sized sample.
 }
 \examples{
 head(Betula)

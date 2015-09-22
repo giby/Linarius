@@ -9,7 +9,7 @@ expend.coord(xx, focal = c(64.13806, -21.92861), dist, Dist.Ref = 0.8)
 \arguments{
 \item{xx}{Coordinates of the points to transform}
 
-\item{focal}{Focal points of the anamorphosis}
+\item{focal}{Focal points of the anamorphosis (longitude and latitude)}
 
 \item{dist}{A vector}
 
@@ -18,5 +18,10 @@ expend.coord(xx, focal = c(64.13806, -21.92861), dist, Dist.Ref = 0.8)
 \description{
 This function aims to prepare anamorphosis maps or cartograms.
 This function adapts GPS coordinates according to a focal point. The final Coordinates reflect the distence to the focal point but the distence between two image points is meaningless.
+}
+\examples{
+data(Leymus)
+dist.pop(Leymus,Leypop, ploidy=8)->dist.ley
+expend.coord(locations[2:14,],locations[1,],dist.ley[1:13],dist.coord(locations[2:14,]))
 }
 

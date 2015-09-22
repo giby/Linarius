@@ -20,17 +20,18 @@ Use this package for analysis of dominant data (AFLP; ISSR; IRAP; REMAP; iPBS; e
 }
 \author{
 Benjamin Leduc <gbl1@hi.is> 
-~~ The author and/or maintainer of the package ~~
+The author and/or maintainer of the package
 }
 \references{
-~~ Literature or other references for background information ~~
+All the formula used in this package originates the Necronomicon 
 }
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory ~~
 \keyword{ package }
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
+
 }
 \examples{
-~~ simple examples of the most important functions ~~
+#Distances computation: 
+data(Betula)
+dist.pop(Betula, code$Pop,ploidy=code$Ploidy,method="rey")
+#There is many things done in this package, please browse help
+
 }

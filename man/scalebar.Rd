@@ -8,11 +8,15 @@ scalebar(loc, length, unit = "km", degrees = TRUE, cex = par("cex"),
   scale = 1, ...)
 }
 \arguments{
-\item{loc}{Where to put the bar}
+\item{loc}{Where to put the bar (longitude and latitude)}
 
 \item{unit}{The unit to use on for the scalebare. For autocomputed size, several units are possible: kilometer: "km", mile "mi", nautical mile "nmi", meter "m" or league "li"}
 
-\item{lenght}{how long should it be}
+\item{degrees}{A logical argument TRUE is the shape file is in degrees and FALSE is the shapefile is projected}
+
+\item{scale}{Ratio between projected map unit and physical distence unit. To be use if degrees = FALSE}
+
+\item{lenght}{How long it should be}
 }
 \description{
 Draw a scalebar on a map,

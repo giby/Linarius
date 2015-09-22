@@ -10,6 +10,6 @@ dist.coord(xx)
 \item{xx}{A datafram of coordinates}
 }
 \description{
-Computes Murphy's constant
+Computes a internal sum of distence. Resulting number might be used for getting harmonious cartogram
 }
 

@@ -9,10 +9,13 @@ allele.frec(xx, ploidy = 2)
 \arguments{
 \item{xx}{A binary datafram of genotypes, individuals as row and alleles as column}
 
-\item{ploidy}{interger or vector, ploidy level of the population or individuals}
+\item{ploidy}{Interger or vector, ploidy level of the population or individuals}
 }
 \description{
-This function aims at elaluating allele hetherozygocy in a ballance population, this considering the ploidy level.  Then It calculated an weighted avarage
+This function aims at evaluating allele hetherozygocy in a ballance population, this considering the ploidy level.  Then It calculated an weighted avarage
+}
+\note{
+There is a little biais on small sized sample.
 }
 \examples{
 head(Betula)
