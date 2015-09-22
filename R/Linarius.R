@@ -2,9 +2,10 @@
 ###                                                                            Linarius.R                                                                                ####
 #############################################################################################################################################################################
 
-#.onAttach <- function(Linarius, Linarius) { 
+  .onAttach <- function(...) {
 packageStartupMessage("This is NOT a free software, not reading the licence is a violation of the licence, by continuing using it, you are considered aware of the terms of Licence.l2k and accepting them") 
-#}
+}
+
 
 #Alleles frequency & heterozygocy 
 #' @title  Function to count allele presence and absence of dominant markers according to ploidy levels
