@@ -16,7 +16,7 @@ packageStartupMessage("This is NOT a free software, not reading the licence is a
 #' @param ploidy Interger or vector, ploidy level of the population or individuals 
 #' 
 #'@examples 
-#' head(Betula)
+#' data(Birch)
 #' allele.count(Betula,code$Ploidy)
 #' 
 
@@ -41,7 +41,7 @@ return(alco)
 #' @note There is a little biais on small sized sample.
 #' 
 #' @examples 
-#' head(Betula)
+#' data(Birch)
 #' allele.frec(Betula,code$Ploidy)
 #' 
 allele.frec<-function(xx,ploidy=2) {
@@ -69,7 +69,7 @@ return(alco)
 #' @note There is a little biais on small sized sample.
 #' 
 #'@examples 
-#' data(Betula)
+#' data(Birch)
 #' allele.hetero(Betula,code$Ploidy)
 #' 
 allele.hetero<-function(xx,ploidy=2) {
@@ -171,7 +171,7 @@ return(boot)
 #' @note This function should be used with the package ade4 
 #' @seealso ade4
 #' @examples 
-#' data(Betula)
+#' data(Birch)
 #' require(vegan)
 #' require(ade4)
 #' require(ape)
@@ -206,14 +206,14 @@ col.edge.phylo<-function (phy,groups,color=c(2,3,4,5),root.color=1)
 #' @param method A method for computing genetic distence between populations, can be any unambigous abreviation of "euclidean", "reynolds", "roger" or "nei"
 #' @param ploidy Interger or vector, ploidy level of the population or individuals 
 #' @examples 
-#' data(Betula)
+#' data(Birch)
 #' dist.pop(Betula, code$Pop,ploidy=code$Ploidy,method="rey") 
 
 	
 	dist.pop<-function(xx,pop, method="reynolds" ,ploidy=2)
 {
-	if (length(ploidy) == 1) 
-	ploidy<-rep(ploidy,length(rownames(xx)))
+    if (length(ploidy) == 1)
+    ploidy <- rep(ploidy, length(rownames(xx)))
 	if (length(rownames(xx)) != length(ploidy)) 
         stop("Mismatch of number of samples and number of ploidy ID")
 	if (!is.na(pmatch(method, "euclidian"))) 	
@@ -259,7 +259,7 @@ return(dMat)
 #' @param names A vector with names of position
 #' @param model A model for computing distence between places, can be any unambigous abreviation of "lambert", "spherical" or "potato"
 #' @examples 
-#' data(Betula)
+#' data(Birch)
 #' distGPS(code$Lat,code$Long,rownames(code))
 distGPS <-function(lat,lon,names,model="lambert")
 {

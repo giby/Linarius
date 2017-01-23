@@ -27,7 +27,7 @@ All the formula used in this package originates the Necronomicon
 }
 \keyword{ package }
 
-}
+
 \examples{
 #Distances computation: 
 data(Betula)
