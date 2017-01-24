@@ -212,8 +212,8 @@ col.edge.phylo<-function (phy,groups,color=c(2,3,4,5),root.color=1)
 	
 	dist.pop<-function(xx,pop, method="reynolds" ,ploidy=2)
 {
-    if (length(ploidy) == 1)
-    ploidy <- rep(ploidy, length(rownames(xx)))
+	if (length(ploidy) == 1) 
+        ploidy <- rep(ploidy, length(rownames(xx)))
 	if (length(rownames(xx)) != length(ploidy)) 
         stop("Mismatch of number of samples and number of ploidy ID")
 	if (!is.na(pmatch(method, "euclidian"))) 	
@@ -294,4 +294,84 @@ if (model >= 4)
 dMat<-as.dist(dMat)  
 return(dMat)
 }
+
+#############################################################################################################################################################################
+#' @title Compute variences of allele frequency among populations 
+#'   
+#'
+#' @description Returns a matrix with allele frequencies in all populations and variances of allele frequencies  
+#' 
+#' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
+#' @param pop A vector informing of population every sample belongs to 
+#' @param ploidy Interger or vector, ploidy level of the population or individuals 
+#' @examples 
+#' data(Birch)
+#' allele.varience(Betula,ploidy=code$Ploidy,pop=code$Pop)
+
+
+allele.varience<- function(xx,ploidy=2,pop) {
+		if (length(ploidy) == 1) 
+        ploidy <- rep(ploidy, length(rownames(xx)))
+        if (length(unique(pop)) == 1) 
+        stop("Fatal error: Mmmm… User too stupid… Hint: To compute variances among populations, you need several populations")
+	if (length(rownames(xx)) != length(ploidy)) 
+        stop("Mismatch of number of samples and number of ploidy ID")
+	if (length(rownames(xx)) != length(pop)) 
+        stop("Mismatch of number of samples and number of population ID")
+poplev<-sort(unique(pop))
+##ssfunction
+allele.frec.pop<-function(xx, ploidy =ploidy,poplist,popname) {
+plolev<-sort(unique(ploidy))
+NULL->varience
+xx<-xx[poplist==popname,]
+ploidy<-ploidy[poplist==popname]
+allele.frec(xx,ploidy)-> varience
+return(varience[,ncol(varience)])
+}
+##end ssfunction
+NULL->variences
+NULL->noms
+for(i in poplev) cbind(variences,as.matrix(allele.frec.pop(xx,ploidy,poplist=pop,popname=i)))-> variences
+for(j in poplev) noms<-c(noms,j)
+#colnames(variences)<-noms
+length(noms)->n
+variences<-variences/100
+cbind(variences,(n*(apply(variences,1,sd))/(n-1))^2)-> variences
+colnames(variences)<-c(noms,"Variances")
+return(variences)
+}
+
+#############################################################################################################################################################################
+#' @title Compute Fst 
+#'   
+#'
+#' @description Returns a matrix with allele frequencies in all populations and variances of allele frequencies  
+#' 
+#' @param xx A binary datafram of genotypes, individuals as row and alleles as column 
+#' @param pop A vector informing of population every sample belongs to 
+#' @param ploidy Interger or vector, ploidy level of the population or individuals 
+#' @examples 
+#' data(Birch)
+#' allele.varience(Betula,ploidy=code$Ploidy,pop=code$Pop)
+
+
+allele.Fst<- function(xx,ploidy=2,pop) {
+		if (length(ploidy) == 1) 
+        ploidy <- rep(ploidy, length(rownames(xx)))
+        if (length(unique(pop)) == 1) 
+        stop("Fatal error: Mmmm… User too stupid… Hint: To compute Fst, you need several populations")
+	if (length(rownames(xx)) != length(ploidy)) 
+        stop("Mismatch of number of samples and number of ploidy ID")
+	if (length(rownames(xx)) != length(pop)) 
+        stop("Mismatch of number of samples and number of population ID")
+poplev<-sort(unique(pop))
+
+NULL->FST
+cbind(as.matrix(allele.frec(xx,ploidy))[,ncol(allele.frec(xx,ploidy))],as.matrix(allele.varience(xx,ploidy,pop))[,ncol(allele.varience(xx,ploidy,pop))])-> FST
+cbind(FST,FST[,2]/((FST[,1]/100)*(100-FST[,2])/100))->FST
+colnames(FST)<-c("Frequency (%)","Variances","Fst")
+return(FST)
+}
+
+
 
